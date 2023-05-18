@@ -1,11 +1,11 @@
 
-import RoadmapHeader from "./component/roadmap/RoadmapHeader";
+import Roadmap from "./pages/Roadmap";
 
 function App() {
   return (
   <div>
     <main>
-      <RoadmapHeader/>
+      <Roadmap/>
     </main>
     </div>
   );
