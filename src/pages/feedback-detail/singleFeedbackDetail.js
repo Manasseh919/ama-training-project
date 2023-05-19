@@ -12,7 +12,7 @@ import {
    FeedbackHeader,
    FeedbackComments,
    AddComment,
-} from '../../component/feedback-detail';
+} from '../../components/feedback-detail';
 
 const SingleFeedbackDetail = () => {
    const { id } = useParams();

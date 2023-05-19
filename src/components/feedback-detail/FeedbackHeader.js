@@ -1,6 +1,6 @@
 // redux
 import { useDispatch } from 'react-redux';
-import { upvoteRequest } from '../../redux/features/product-requests.js/productRequestsSlice';
+import { upvoteRequest } from '../../redux/features/product-requests/productRequestsSlice';
 
 // styles
 import styled from 'styled-components';

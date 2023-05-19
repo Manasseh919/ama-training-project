@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Seo } from '../component/shared';
-import { Header, SuggestionsContent } from '../component/suggestions';
+import { Seo } from '../components/shared';
+import { Header, SuggestionsContent } from '../components/suggestions';
 import { breakpoints } from '../styles';
 
 export default function Home() {
