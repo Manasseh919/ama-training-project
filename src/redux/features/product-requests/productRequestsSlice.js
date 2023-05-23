@@ -31,6 +31,7 @@ export const productRequestsSlice = createSlice({
             );
          }
       },
+
       updateFilters: (state, action) => {
          const { name, value } = action.payload;
          state.filters[name] = value;
@@ -96,7 +97,7 @@ export const productRequestsSlice = createSlice({
             });
 
          state.allRequests = upvoteFunc(state.allRequests);
-         state[status] = upvoteFunc(state[status]);
+         state[replaceSpace(status)] = upvoteFunc(state[replaceSpace(status)]);
       },
       toggleRoadMapMobile: (state, action) => {
          state.filters.roadmapMobile = action.payload;
@@ -115,30 +116,72 @@ export const productRequestsSlice = createSlice({
          };
 
          state.allRequests = [...state.allRequests, newFeedback];
-         state.suggestion = [...state.suggestion, newFeedback];
       },
 
       editCurrentFeedback: (state, action) => {
-         // const { id, title, status, category, description } = action.payload;
-         // const tempRequests = [...state.allRequests];
-         // let tempFeedback = [...state.allRequests].find(
-         //    (request) => request.id === id
-         // );
-         // let rest = [...state.allRequests].filter(
-         //    (request) => request.id !== id
-         // );
-         // state.allRequests = [...rest, { ...tempFeedback, ...action.payload }];
-         // for (let i = 0; i < statuses.length; i++) {
-         //    state[replaceSpace(statuses[i])] = filterStatus(
-         //       state.allRequests,
-         //       statuses[i]
-         //    );
-         // }
-         // state.allRequests = [
-         //    ...state.allRequests,
-         //    { id: new Date().getTime(), ...tempFeedback },
-         // ];
+         const { id, title, status, category, description } = action.payload;
+
+         const tempRequests = (requests) =>
+            [...requests].map((request) => {
+               if (Number(request.id) === Number(id)) {
+                  return {
+                     ...request,
+                     id: Number(id),
+                     title,
+                     status,
+                     category,
+                     description,
+                  };
+               }
+
+               return request;
+            });
+
+         state.allRequests = tempRequests(state.allRequests);
+         for (let i = 0; i < statuses.length; i++) {
+            state[replaceSpace(statuses[i])] = filterStatus(
+               state.allRequests,
+               statuses[i]
+            );
+         }
       },
+
+      deleteCurrentFeedback: (state, action) => {
+         const { id, status } = action.payload;
+         let tempRequests = (requests) =>
+            [...requests].filter((request) => request.id !== Number(id));
+
+         state.allRequests = tempRequests(state.allRequests);
+         state[replaceSpace(status)] = tempRequests(
+            state[replaceSpace(status)]
+         );
+      },
+
+      addNewComment: (state, action) => {
+         console.log(action);
+         const { user, feedbackId, commentId: id, content } = action.payload;
+         const tempRequests = [...state.allRequests].map((request) => {
+            if (Number(request.id) === Number(feedbackId)) {
+               return {
+                  ...request,
+                  comments: [
+                     ...request.comments,
+                     {
+                        id,
+                        content,
+                        user,
+                     },
+                  ],
+               };
+            }
+
+            return request;
+         });
+
+         state.allRequests = tempRequests;
+      },
+
+      replyComment: (state, action) => {},
    },
 });
 
@@ -151,6 +194,9 @@ export const {
    toggleRoadMapMobile,
    addNewFeedback,
    editCurrentFeedback,
+   deleteCurrentFeedback,
+   addNewComment,
+   replyComment,
 } = productRequestsSlice.actions;
 
 export default productRequestsSlice.reducer;

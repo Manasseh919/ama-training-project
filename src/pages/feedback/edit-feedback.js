@@ -6,7 +6,10 @@ import { categories, statuses } from '../../data/formSelect';
 import { breakpoints, misc, typography } from '../../styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { editCurrentFeedback } from '../../redux/features/product-requests/productRequestsSlice';
+import {
+   deleteCurrentFeedback,
+   editCurrentFeedback,
+} from '../../redux/features/product-requests/productRequestsSlice';
 import { validate } from '../../utils/helpers';
 
 const EditFeedback = () => {
@@ -20,8 +23,6 @@ const EditFeedback = () => {
       (request) => Number(request.id) === Number(id)
    );
 
-   // const [title, setTitle] = useState(currentFeedback.title);
-   // const [description, setDescription] = useState(currentFeedback.description);
    const [category, setCategory] = useState(currentFeedback.category);
    const [status, setStatus] = useState(currentFeedback.status);
 
@@ -32,7 +33,6 @@ const EditFeedback = () => {
       },
       validate,
       onSubmit: (values) => {
-         console.log(values);
          dispatch(
             editCurrentFeedback({
                ...values,
@@ -61,7 +61,8 @@ const EditFeedback = () => {
    };
 
    const deleteFeedback = () => {
-      navigate(-1);
+      dispatch(deleteCurrentFeedback({ id, status }));
+      navigate('/');
    };
    const cancelFeedbackChange = () => {
       navigate(-1);
