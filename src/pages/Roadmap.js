@@ -4,6 +4,7 @@ import {
    RoadmapHeader,
 } from '../components/roadmap';
 import { Seo } from '../components/shared';
+import React from 'react';
 
 import styled from 'styled-components';
 import { breakpoints } from '../styles';
