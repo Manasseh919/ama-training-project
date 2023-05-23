@@ -8,7 +8,7 @@ import { Seo } from '../components/shared';
 import styled from 'styled-components';
 import { breakpoints } from '../styles';
 
-const Roadmap = () => {
+const roadmap = () => {
    return (
       <>
          <Seo title='Roadmap' />
@@ -23,7 +23,7 @@ const Roadmap = () => {
    );
 };
 
-export default Roadmap;
+export default roadmap;
 
 const RoadmapWrap = styled.main`
    padding-bottom: 1rem;
