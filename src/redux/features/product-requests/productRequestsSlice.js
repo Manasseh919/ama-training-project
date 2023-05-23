@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import data from '../../../data/data.json';
 import {
    filterStatus,
@@ -114,8 +114,12 @@ export const productRequestsSlice = createSlice({
       },
       addNewFeedback: (state, action) => {
          const { title, category, description } = action.payload;
+         let tempId = Math.max(
+            ...state.allRequests.map((request) => request.id)
+         );
+
          const newFeedback = {
-            id: new Date().getTime(),
+            id: tempId + 1,
             title,
             category,
             upvotes: 0,
